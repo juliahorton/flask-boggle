@@ -1,9 +1,31 @@
 const $form = $("#guess-form");
 const $input = $("#guess");
+const $submitBtn = $("#guess-form button")
 const $message = $(".msg");
 const $score = $("#score");
+const $countdown = $("#countdown");
+const $startBtn = $("#start");
+let timerIntervId;
 
-$form.on("submit", getGuess);
+// prevents user from submitting a guess before the timer has been started
+$form.on("submit", function(e){e.preventDefault()});
+
+$startBtn.on("click", startGame);
+
+function startGame(){
+    $startBtn.off();
+    $startBtn.text("New Game");
+    $startBtn.on("click", newGameHandler);
+    $form.on("submit", getGuess);
+    // after 60 seconds, stop allowing user to submit new guesses
+    setTimeout(gameOver, 3000);
+    // update UI to show 60-second countdown once timer has started
+    timerIntervId = setInterval(showCountdown, 1000);
+}
+
+function newGameHandler(){
+    location.reload();
+}
 
 async function getGuess(e){
     e.preventDefault();
@@ -21,8 +43,7 @@ async function getGuess(e){
     } else {
         showMessage(`Added: ${guess}`, "ok");
         updateScore(guess.length);
-    };
-    // return false
+    }
 }
 
 function showMessage(msg, cls){
@@ -33,4 +54,16 @@ function updateScore(lengthOfGuess){
     let currScore = Number($score.text());
     let newScore = currScore + lengthOfGuess;
     $score.text(newScore)
+}
+
+function showCountdown(){
+    let currNum = Number($countdown.text());
+    $countdown.text(`${currNum - 1}`);
+}
+
+function gameOver(){
+    $form.off();
+    $form.on("submit", function(e){e.preventDefault()});
+    clearInterval(timerIntervId);
+    $("#timer-container span").empty().append("<p>GAME OVER</p>")
 }
