@@ -5,7 +5,10 @@ const $message = $(".msg");
 const $score = $("#score");
 const $countdown = $("#countdown");
 const $startBtn = $("#start");
+const $gamesPlayed = $("#games-played");
+const $highScore = $("#high-score");
 let timerIntervId;
+// let gameOver = null;
 
 // prevents user from submitting a guess before the timer has been started
 $form.on("submit", function(e){e.preventDefault()});
@@ -18,7 +21,7 @@ function startGame(){
     $startBtn.on("click", newGameHandler);
     $form.on("submit", getGuess);
     // after 60 seconds, stop allowing user to submit new guesses
-    setTimeout(gameOver, 3000);
+    setTimeout(gameOver, 10000);
     // update UI to show 60-second countdown once timer has started
     timerIntervId = setInterval(showCountdown, 1000);
 }
@@ -32,7 +35,7 @@ async function getGuess(e){
     const guess = $input.val();
     $form.trigger("reset");
 
-    if (!guess) return;
+    // if (!guess) return;
 
     const response = await axios.get("/check-guess", { params: {guess} });
     
@@ -65,5 +68,14 @@ function gameOver(){
     $form.off();
     $form.on("submit", function(e){e.preventDefault()});
     clearInterval(timerIntervId);
-    $("#timer-container span").empty().append("<p>GAME OVER</p>")
+    $("#timer-container span").empty().append("<p>GAME OVER</p>");
+    // let gameOver = true;
+    let finalScore = Number($score.text());
+    updateStats(finalScore);
+}
+
+async function updateStats(score){
+    const response = await axios.get("/update-stats", { params: {score} });
+    $highScore.text(response.data.high_score);
+    $gamesPlayed.text(response.data.games_played);
 }

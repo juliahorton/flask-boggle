@@ -11,6 +11,7 @@
 
         <div id="timer-container">
             <button id="start">Begin Game</button>
+            <br>
             <span>
                 <p>Time remaining: 
                 <p id="countdown">60</p>
@@ -48,14 +49,21 @@
 
         <div id="messages-container">
             <p class="msg">
-
+                &nbsp
             </p>
         </div>
 
         <div id="score-container">
             <p>Score:</p>
             <p id="score"></p>
+        </div>
 
+        <div id="stats">
+            <!-- <p>Games played: <p id="games-played">0</p></p>
+            <p>High score: <p id="high-score">0</p></p> -->
+            <p>Games played: <p id="games-played">{{ session["games_played"] }}</p></p>
+            <br>
+            <p>High score: <p id="high-score">{{ session["high_score"] }}</p></p>
         </div>
 
 
