@@ -1,12 +1,12 @@
 from flask import Flask, request, render_template, session, jsonify
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 from boggle import Boggle
-from IPython.core.debugger import set_trace
+# from IPython.core.debugger import set_trace
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "so-secret"
 
-debug = DebugToolbarExtension(app)
+# debug = DebugToolbarExtension(app)
 
 boggle_game = Boggle()
 words = boggle_game.words

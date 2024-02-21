@@ -21,7 +21,7 @@ function startGame(){
     $startBtn.on("click", newGameHandler);
     $form.on("submit", getGuess);
     // after 60 seconds, stop allowing user to submit new guesses
-    setTimeout(gameOver, 10000);
+    setTimeout(gameOver, 60000);
     // update UI to show 60-second countdown once timer has started
     timerIntervId = setInterval(showCountdown, 1000);
 }
