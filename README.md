@@ -1,0 +1,1 @@
+This project is a Boggle-style game I built and tested using Python and Flask as part of my Springboard Software Engineering bootcamp curriculum in the first few units focused on backend development. 
